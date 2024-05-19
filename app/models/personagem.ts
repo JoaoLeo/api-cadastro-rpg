@@ -1,7 +1,8 @@
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
 import Classe from './classe.js'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Jogador from './jogador.js'
+import Poder from './poder.js'
 
 export default class Personagem extends BaseModel {
   @column({ isPrimary: true })
@@ -29,4 +30,11 @@ export default class Personagem extends BaseModel {
     foreignKey: 'jogadorId'
   })
   declare jogador: BelongsTo<typeof Jogador>
+
+  @manyToMany(() => Poder, {
+    pivotTable: 'personagem_poders',
+    pivotForeignKey: 'personagem_id',
+    pivotRelatedForeignKey: 'poder_id',
+  })
+  declare poderes: ManyToMany<typeof Poder>
 }

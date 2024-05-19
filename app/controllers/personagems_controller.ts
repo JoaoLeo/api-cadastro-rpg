@@ -8,7 +8,7 @@ export default class PersonagemController {
   
     public async show({ params }: HttpContext) {
       const id = params.id
-      const personagem = await Personagem.query().preload('classe').preload('jogador').where('id', id).firstOrFail()
+      const personagem = await Personagem.query().preload('classe').preload('jogador').preload('poderes').where('id', id).firstOrFail()
       return personagem
     }
   
